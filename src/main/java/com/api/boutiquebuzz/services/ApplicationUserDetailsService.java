@@ -26,6 +26,7 @@ public class ApplicationUserDetailsService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
         return
                 userRepository.
                         findByEmail(email).

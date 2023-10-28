@@ -23,6 +23,7 @@ public class LoginController {
     private final UserService userService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
     private final ApplicationUserDetailsService applicationUserDetailsService;
     //    private EmailService emailService;
     @Autowired
@@ -34,14 +35,15 @@ public class LoginController {
     public String getLogin() {
         return "auth-login";
     }
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody LoginUserDto loginUserDto) {
-        String username = loginUserDto.getUsername();
+        String username = loginUserDto.getEmail();
         String password = loginUserDto.getPassword();
         UserDetails userDetails = applicationUserDetailsService.loadUserByUsername(username);
 
         // Perform authentication logic using Spring Security or custom authentication logic
-
+        boolean res = passwordMatches(userDetails, password);
         if (passwordMatches(userDetails, password)) {
             return ResponseEntity.ok("{\"message\": \"Login successful\", \"username\": \"" + username + "\"}");
         } else {
@@ -52,13 +54,14 @@ public class LoginController {
         // Check if the provided password matches the user's password
         return passwordEncoder.matches(providedPassword, userDetails.getPassword());
     }
-    @PostMapping("/login-error")
-    public ResponseEntity<String> onFailedLogin(
-            @RequestBody Map<String, String> loginData) {
-        // Process the login error and return an appropriate response
-        String username = loginData.get(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY);
-        // You can return an error message or status as JSON
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"error\": \"Login failed for user " + username + "\"}");
-    }
+//    @PostMapping("/login-error")
+//    public ResponseEntity<String> onFailedLogin(
+//            @RequestBody Map<String, String> loginData) {
+//        // Process the login error and return an appropriate response
+////        String username = loginData.get(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY);
+//        String username = loginData.get("email");
+//        // You can return an error message or status as JSON
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("{\"error\": \"Login failed for user " + username + "\"}");
+//    }
 
 }

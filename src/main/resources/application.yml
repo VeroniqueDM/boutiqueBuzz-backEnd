@@ -1,61 +1,63 @@
-
-server:
-  port: 4000
-  error:
-    include-message: always
-    include-binding-errors: always
-    include-stacktrace: never
-    include-exception: false
-
-spring:
-  datasource:
-    url: jdbc:postgresql://balarama.db.elephantsql.com:5432/pmpcrelu
-    username: pmpcrelu
-    password: ldQoXPDcn-nXu9TYdxhbitpYvGvZnQKn
-    max-active: 5
-    max-idle: 5
-  jpa:
-    hibernate:
-      #      ddl-auto: create-drop
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-    show-sql: true
+#
+#server:
+#  port: 4000
+#  error:
+#    include-message: always
+#    include-binding-errors: always
+#    include-stacktrace: never
+#    include-exception: false
 #
 #spring:
 #  datasource:
-#    driverClassName: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/boutiqueBuzz?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
-#    username: root
-#    password: 12345
+#    url: jdbc:postgresql://cornelius.db.elephantsql.com:5432/yoegbeob
+#    username: yoegbeob
+#    password: Q7mdQz30HEJ5k-sYlXl-RYbluBg2UILq
+#    max-active: 3
+#    max-idle: 3
 #  jpa:
-#    database-platform: org.hibernate.dialect.MySQLDialect
 #    hibernate:
+#      #      ddl-auto: create-drop
 #      ddl-auto: update
-#    defer-datasource-initialization: true
-#  mvc:
-#    hiddenmethod:
-#      filter:
-#        enabled: true
-#  sql:
-#    init:
-#      mode: never
-#
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: "*"
-#  server:
-##    port: 8081
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
+#    show-sql: true
+
+
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/boutiqueBuzz?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+    password: 12345
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  sql:
+    init:
+      mode: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+    port: 8081
 #    port: 4000
-#    error:
-#      include-message: always
-#      include-binding-errors: always
-#      include-stacktrace: never
-#      include-exception: false
+    error:
+      include-message: always
+      include-binding-errors: always
+      include-stacktrace: never
+      include-exception: false
 
 #boutiqueBuzz:
 #  admin:

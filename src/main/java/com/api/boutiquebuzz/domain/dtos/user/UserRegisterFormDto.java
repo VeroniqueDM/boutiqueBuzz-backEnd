@@ -1,16 +1,27 @@
 package com.api.boutiquebuzz.domain.dtos.user;
 
 import com.api.boutiquebuzz.validations.PasswordMatcher;
+import com.api.boutiquebuzz.validations.UniqueEmail;
+import com.api.boutiquebuzz.validations.UniqueUsername;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
+import org.hibernate.validator.constraints.UniqueElements;
 
+@Data
 @PasswordMatcher(password = "password", confirmPassword = "confirmPassword")
 public class UserRegisterFormDto {
+@UniqueUsername
+private String username;
 
     @NotBlank(message = "{userregisterformdto.email.invalid}")
     @Email(message = "{userregisterformdto.email.invalid}")
+//    @NotBlank(message = InvalidMessages.EMPTY_EMAIL)
+//    @Email(message = InvalidMessages.INVALID_EMAIL)
+    @UniqueEmail
+//    @UniqueElements
     private String email;
 
     @NotNull

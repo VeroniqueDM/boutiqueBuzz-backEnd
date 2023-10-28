@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -44,6 +45,7 @@ public class SecurityConfiguration {
                 loginPage("/users/login").
                 // the names of the user name, password input fields in the custom login form
                         usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
+//                        usernameParameter("email").
                 passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
                 // where do we go after login
                         defaultSuccessUrl("/").//use true argument if you always want to go there, otherwise go to previous page
@@ -76,5 +78,12 @@ public class SecurityConfiguration {
                 new HttpSessionSecurityContextRepository()
         );
     }
+//    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .maximumSessions(1) // Allow only one session per user
+                .expiredUrl("/login?expired");
 
+    }
 }

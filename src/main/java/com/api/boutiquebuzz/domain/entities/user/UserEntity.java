@@ -3,13 +3,17 @@ package com.api.boutiquebuzz.domain.entities.user;
 
 import com.api.boutiquebuzz.domain.entities.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
-
+@Data
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity {
 
+
+    @Column
+    private String username;
     @Column
     private String email; // –  username of the user.
 
@@ -40,6 +44,10 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setPassword(String password) {
         this.password = password;
+        return this;
+    }
+    public UserEntity setUsername(String username) {
+        this.username = username;
         return this;
     }
 
