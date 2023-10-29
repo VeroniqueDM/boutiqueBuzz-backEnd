@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @CrossOrigin
-
 @RestController
 @RequestMapping("/events")
-public class EventController {
+public class EventController {  
 
     private final EventService eventService;
 

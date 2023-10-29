@@ -32,9 +32,9 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
+### Ignore application.yml file ###
+src/main/resources/application.yml
 
 ### VS Code ###
 .vscode/
 
-### Ignore application.yml file ###
-src/main/resources/application.yml

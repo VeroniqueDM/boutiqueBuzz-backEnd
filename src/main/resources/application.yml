@@ -1,4 +1,3 @@
-
 server:
   port: 4000
   error:
@@ -7,23 +6,65 @@ server:
     include-stacktrace: never
     include-exception: false
 
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://balarama.db.elephantsql.com:5432/pmpcrelu
+#    username: pmpcrelu
+#    password: ldQoXPDcn-nXu9TYdxhbitpYvGvZnQKn
+#    max-active: 3
+#    max-idle: 3
+#  jpa:
+#    hibernate:
+#      #      ddl-auto: create-drop
+#      ddl-auto: update
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        format_sql: true
+#    show-sql: true
+
 spring:
   datasource:
-    url: jdbc:postgresql://balarama.db.elephantsql.com:5432/pmpcrelu
-    username: pmpcrelu
-    password: ldQoXPDcn-nXu9TYdxhbitpYvGvZnQKn
-    max-active: 3
-    max-idle: 3
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/boutiqueBuzz?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+    password: 12345
   jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      #      ddl-auto: create-drop
       ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
+    defer-datasource-initialization: true
     show-sql: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  sql:
+    init:
+      mode: never
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: fcdfedb816b87bdd88b9
+            clientSecret: 0752bfd8ff6cd5821f8666c6dde55deaa2e40503
+          google:
+            client-id: 762697933875-4573iu8i6s6te9obpnpfnmkudrs0fjaq.apps.googleusercontent.com
+            client-secret: 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
+            scope: openId, profile, email
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com
+          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+
 
 logging:
   level:
-    org.springframework.web.servlet.view: DEBUG
+    web: DEBUG
+    org.springframework: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor: DEBUG
+
+frontend:
+  url: http://localhost:3000
