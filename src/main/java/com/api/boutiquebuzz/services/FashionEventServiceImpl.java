@@ -7,8 +7,11 @@ import com.api.boutiquebuzz.domain.entities.FashionEvent;
 import com.api.boutiquebuzz.repositories.EventRepository;
 import com.api.boutiquebuzz.utils.ErrorConstants;
 import com.api.boutiquebuzz.utils.ResourceNotFoundException;
+import com.api.boutiquebuzz.utils.UserRoleEnum;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,6 +41,8 @@ public class FashionEventServiceImpl implements EventService {
     public EventResponseDTO getEventById(Long eventId) {
         Optional<FashionEvent> eventOptional = fashionEventRepository.findById(eventId);
         if (eventOptional.isPresent()) {
+            EventResponseDTO eventResponseDTO = modelMapper.map(eventOptional.get(), EventResponseDTO.class);
+            eventResponseDTO.setOwnerId(fashionEventRepository.findOwnerIdByEventId(eventId));
             return modelMapper.map(eventOptional.get(), EventResponseDTO.class);
         } else {
             throw new ResourceNotFoundException(String.format(ErrorConstants.EVENT_NOT_FOUND_MESSAGE, eventId));
@@ -88,5 +93,31 @@ public class FashionEventServiceImpl implements EventService {
                 !existingEvent.getDescription().equals(updateEventDTO.getDescription());
 
         return hasUpdates;
+    }
+    @Override
+    public boolean isOwner(UserDetails userDetails, Long id) {
+        if (id == null || userDetails == null) {
+            return  false;
+        }
+
+        var fashionEvent = fashionEventRepository.
+                findById(id).
+                orElse(null);
+
+        if (fashionEvent == null) {
+            return false;
+        }
+        String unameOrEmail = userDetails.getUsername();
+        String ownerEmail = fashionEvent.getOwner().getEmail();
+        return userDetails.getUsername().equals(fashionEvent.getOwner().getEmail()) ||
+                isUserAdmin(userDetails);
+    }
+
+    private boolean isUserAdmin(UserDetails userDetails) {
+        // TODO
+        return userDetails.getAuthorities().
+                stream().
+                map(GrantedAuthority::getAuthority).
+                anyMatch(a -> a.equals("ROLE_" + UserRoleEnum.ADMIN.name()));
     }
 }

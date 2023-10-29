@@ -1,5 +1,6 @@
 package com.api.boutiquebuzz.domain.entities;
 
+import com.api.boutiquebuzz.domain.entities.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,7 +29,8 @@ public class FashionItem extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "designer_id", nullable = false)
     private Designer designer;
-
+@ManyToOne(optional = false)
+private UserEntity owner;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collection_id")
     private DesignerCollection collection;

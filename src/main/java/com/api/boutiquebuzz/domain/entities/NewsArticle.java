@@ -1,6 +1,7 @@
 package com.api.boutiquebuzz.domain.entities;
 
 
+import com.api.boutiquebuzz.domain.entities.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,7 +28,8 @@ public class NewsArticle extends BaseEntity {
 //    @ManyToOne
 //    @JoinColumn(name = "designer_id", nullable = false)
 //    private Designer designer;
-
+@ManyToOne(optional = false)
+private UserEntity owner;
     public NewsArticle(String title, String content, LocalDateTime publishedAt) {
         this.title = title;
         this.content = content;

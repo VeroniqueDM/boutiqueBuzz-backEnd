@@ -1,6 +1,7 @@
 package com.api.boutiquebuzz.domain.entities;
 
 
+import com.api.boutiquebuzz.domain.entities.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,7 +30,8 @@ public class FashionEvent extends BaseEntity {
 //    @ManyToOne
 //    @JoinColumn(name = "designer_id", nullable = false)
 //    private Designer designer;
-
+@ManyToOne(optional = false)
+private UserEntity owner;
     public FashionEvent(String title, String description, LocalDateTime eventDate) {
         this.title = title;
         this.description = description;

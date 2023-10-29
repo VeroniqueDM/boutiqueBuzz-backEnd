@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,7 @@ public class FashionItemController {
         FashionItemResponseDTO createdFashionItem = fashionItemService.createFashionItem(fashionItemDTO);
         return new ResponseEntity<>(createdFashionItem, HttpStatus.CREATED);
     }
+    @PreAuthorize("hasRole('ROLE_OWNER')")
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateFashionItem(@PathVariable Long id, @RequestBody @Valid UpdateFashionItemRequestDTO fashionItemDTO, BindingResult bindingResult) {
@@ -69,6 +71,7 @@ public class FashionItemController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @PreAuthorize("hasRole('ROLE_OWNER')")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFashionItem(@PathVariable Long id) {

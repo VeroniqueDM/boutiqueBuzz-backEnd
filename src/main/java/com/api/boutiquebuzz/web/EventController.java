@@ -11,6 +11,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,9 +60,15 @@ public class EventController {
         EventResponseDTO createdEvent = eventService.createEvent(eventDTO);
         return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
     }
+//    @PreAuthorize("hasRole('ROLE_OWNER')")
+    @PreAuthorize("@eventService.isOwner(#userDetails, #id)")
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateEvent(@PathVariable Long id, @RequestBody @Valid UpdateEventRequestDTO eventDTO, BindingResult bindingResult) {
+    public ResponseEntity<?> updateEvent(@PathVariable Long id,
+                                         @RequestBody @Valid UpdateEventRequestDTO eventDTO,
+                                         BindingResult bindingResult,
+                                         @AuthenticationPrincipal UserDetails userDetails
+                                         ) {
         ResponseEntity<?> error = ErrorUtil.getErrors(bindingResult);
         if (error != null) return error;
         try {
@@ -69,9 +78,12 @@ public class EventController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @PreAuthorize("@eventService.isOwner(#userDetails, #id)")
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteEvent(@PathVariable Long id) {
+    public ResponseEntity<?> deleteEvent(@PathVariable Long id,
+                                         @AuthenticationPrincipal UserDetails userDetails
+                                         ) {
         try {
             EventResponseDTO deletedEvent = eventService.deleteEvent(id);
             return ResponseEntity.ok(deletedEvent);

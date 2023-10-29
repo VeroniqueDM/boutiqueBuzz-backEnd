@@ -37,7 +37,11 @@ public class SecurityConfiguration {
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll().
                 // the URL-s below are available for all users - logged in and anonymous
-                        requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/events", "/news","/init-data/*").permitAll().
+                        requestMatchers("/**"
+//                                "/", "/users/login", "/users/register", "/users/login-error",
+//                        "/events", "/news","/init-data/*",
+//                        "/designers", "/collections","/items"
+                        ).permitAll().
                 anyRequest().authenticated().
                 and().
                 // configure login with HTML form
@@ -57,7 +61,8 @@ public class SecurityConfiguration {
                 and().
                 securityContext().
                 securityContextRepository(securityContextRepository);
-
+//        http.sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
         return http.build();
     }
 
@@ -65,7 +70,39 @@ public class SecurityConfiguration {
 //    public PasswordEncoder passwordEncoder() {
 //        return new BCryptPasswordEncoder();
 //    }
+//@Bean
+//public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//    http
+////            .cors().and()
+////            .csrf().disable()
+//            .authorizeRequests()
+//            // Define your API endpoints here
+//            .requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/events", "/news","/init-data/*").permitAll()
+//            .requestMatchers("/api/private/**").authenticated()
+//            .and()
+//            .formLogin()
+//            .loginPage("/users/login")
+//            .defaultSuccessUrl("/") // Change this to your desired success URL
+//            .failureForwardUrl("/users/login-error")
+//            .and()
+//            .logout()
+//            .logoutUrl("/users/logout")
+//            .logoutSuccessUrl("/")
+//            .invalidateHttpSession(true)
+//            .deleteCookies("JSESSIONID")
+//            .and()
+//            .sessionManagement()
+//            .sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+//    return http.build();
+//}
 
+//    @Bean
+//    public UsernamePasswordAuthenticationFilter yourCustomAuthenticationFilter() {
+//        // Implement your custom authentication filter for token-based authentication here
+//        // You may need to handle token extraction and validation.
+//        // This filter will replace the form-based login.
+//        return new UsernamePasswordAuthenticationFilter();
+//    }
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return new ApplicationUserDetailsService(userRepository);
@@ -86,4 +123,5 @@ public class SecurityConfiguration {
                 .expiredUrl("/login?expired");
 
     }
+
 }

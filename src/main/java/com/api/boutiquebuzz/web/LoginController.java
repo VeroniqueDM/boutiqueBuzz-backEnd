@@ -4,16 +4,15 @@ package com.api.boutiquebuzz.web;
 import com.api.boutiquebuzz.domain.dtos.user.LoginUserDto;
 import com.api.boutiquebuzz.services.ApplicationUserDetailsService;
 import com.api.boutiquebuzz.services.UserService;
+import com.api.boutiquebuzz.utils.ErrorUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -31,13 +30,16 @@ public class LoginController {
         this.userService = userService;
         this.applicationUserDetailsService = applicationUserDetailsService;
     }
-    @GetMapping("/login")
-    public String getLogin() {
-        return "auth-login";
-    }
+//    @GetMapping("/login")
+//    public String getLogin() {
+//        return "auth-login";
+//    }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginUserDto loginUserDto) {
+    public ResponseEntity<?> userLogin(@Valid @RequestBody LoginUserDto loginUserDto, BindingResult bindingResult) {
+        ResponseEntity<?> error = ErrorUtil.getErrors(bindingResult);
+        System.out.println(error);
+        if (error != null) return error;
         String username = loginUserDto.getEmail();
         String password = loginUserDto.getPassword();
         UserDetails userDetails = applicationUserDetailsService.loadUserByUsername(username);

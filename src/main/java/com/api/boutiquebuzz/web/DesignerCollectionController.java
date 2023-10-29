@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,7 +58,7 @@ public class DesignerCollectionController {
         CollectionResponseDTO createdDesignerCollection = designerCollectionService.createCollection(designerCollectionDTO);
         return new ResponseEntity<>(createdDesignerCollection, HttpStatus.CREATED);
     }
-
+    @PreAuthorize("hasRole('ROLE_OWNER')")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDesignerCollection(@PathVariable Long id, @RequestBody @Valid UpdateCollectionRequestDTO designerCollectionDTO, BindingResult bindingResult) {
         ResponseEntity<?> error = ErrorUtil.getErrors(bindingResult);
@@ -69,6 +70,7 @@ public class DesignerCollectionController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @PreAuthorize("hasRole('ROLE_OWNER')")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDesignerCollection(@PathVariable Long id) {
