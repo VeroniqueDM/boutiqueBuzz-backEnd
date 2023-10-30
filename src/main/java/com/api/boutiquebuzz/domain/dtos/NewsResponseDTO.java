@@ -11,5 +11,6 @@ public class NewsResponseDTO {
     private String title;
     private String content;
     private LocalDateTime publishedAt;
+    private Long ownerId;
 
 }

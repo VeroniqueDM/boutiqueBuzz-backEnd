@@ -128,4 +128,12 @@ public class FashionEventServiceImpl implements EventService {
 
         return hasUpdates;
     }
+
+    @Override
+    public List<EventResponseDTO> searchEvents(String keyword) {
+        List<FashionEvent> events = fashionEventRepository.searchEvents(keyword);
+        return events.stream()
+                .map(event -> modelMapper.map(event, EventResponseDTO.class))
+                .collect(Collectors.toList());
+    }
 }

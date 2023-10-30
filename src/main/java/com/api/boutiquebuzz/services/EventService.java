@@ -12,4 +12,6 @@ public interface EventService {
     EventResponseDTO createEvent(CreateEventRequestDTO eventDTO);
     EventResponseDTO updateEvent(Long id, UpdateEventRequestDTO updateEventDTO);
     EventResponseDTO deleteEvent(Long eventId);
+
+    List<EventResponseDTO> searchEvents(String keyword);
 }

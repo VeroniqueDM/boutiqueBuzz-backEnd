@@ -127,4 +127,16 @@ public NewsResponseDTO createNews(CreateNewsRequestDTO newsDTO) {
 
         return hasUpdates;
     }
+
+    @Override
+    public List<NewsResponseDTO> searchNews(String keyword) {
+        List<NewsArticle> results = fashionNewsRepository.searchNews(keyword);
+
+        // Convert the results to DTOs
+        List<NewsResponseDTO> newsDTOs = results.stream()
+                .map(news -> modelMapper.map(news, NewsResponseDTO.class))
+                .collect(Collectors.toList());
+
+        return newsDTOs;
+    }
 }

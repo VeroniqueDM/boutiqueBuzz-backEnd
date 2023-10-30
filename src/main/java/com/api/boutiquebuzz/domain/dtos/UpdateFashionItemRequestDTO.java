@@ -1,5 +1,6 @@
 package com.api.boutiquebuzz.domain.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -10,5 +11,9 @@ public class UpdateFashionItemRequestDTO {
 
     @NotBlank(message = "Description is required")
     private String description;
+    @JsonIgnore
+    private Long ownerId;
+    private Long category;
+    private String imageUrl; // Add the image URL attribute
 
 }

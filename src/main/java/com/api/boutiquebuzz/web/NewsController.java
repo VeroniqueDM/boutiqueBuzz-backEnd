@@ -82,4 +82,10 @@ public class NewsController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<NewsResponseDTO>> searchNews(@RequestParam(name = "keyword") String keyword) {
+        List<NewsResponseDTO> searchResults = newsService.searchNews(keyword);
+        return ResponseEntity.ok(searchResults);
+    }
 }

@@ -1,4 +1,5 @@
 package com.api.boutiquebuzz.web;
+import com.api.boutiquebuzz.domain.dtos.NewsResponseDTO;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 
 import com.api.boutiquebuzz.domain.dtos.CreateEventRequestDTO;
@@ -80,5 +81,10 @@ public class EventController {
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<EventResponseDTO>> searchNews(@RequestParam(name = "keyword") String keyword) {
+        List<EventResponseDTO> searchResults = eventService.searchEvents(keyword);
+        return ResponseEntity.ok(searchResults);
     }
 }

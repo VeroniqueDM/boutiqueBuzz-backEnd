@@ -24,7 +24,8 @@ public class FashionItem extends BaseEntity implements AuthorOwnedEntity {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
+    @Column(nullable = false)
+    private String imageUrl;
 //    @ManyToOne
 //    @JoinColumn(name = "designer_id", nullable = false)
 //    private Designer designer;

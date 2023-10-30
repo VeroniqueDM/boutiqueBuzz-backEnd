@@ -13,4 +13,6 @@ public interface NewsService {
     NewsResponseDTO createNews(CreateNewsRequestDTO newsDTO);
     NewsResponseDTO updateNews(Long id, UpdateNewsRequestDTO updateNewsDTO);
     NewsResponseDTO deleteNews(Long newsId);
+
+    List<NewsResponseDTO> searchNews(String keyword);
 }
