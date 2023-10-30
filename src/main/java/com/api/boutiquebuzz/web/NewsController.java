@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,7 @@ public class NewsController {
         NewsResponseDTO createdNews = newsService.createNews(newsDTO);
         return new ResponseEntity<>(createdNews, HttpStatus.CREATED);
     }
+    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(NewsArticle).class, 'WRITE')")
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateNews(@PathVariable Long id, @RequestBody @Valid UpdateNewsRequestDTO newsDTO, BindingResult bindingResult) {
@@ -69,6 +71,7 @@ public class NewsController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(NewsArticle).class, 'WRITE')")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteNews(@PathVariable Long id) {

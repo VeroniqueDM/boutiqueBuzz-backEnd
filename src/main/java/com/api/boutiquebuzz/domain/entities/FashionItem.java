@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "fashion_items")
-public class FashionItem extends BaseEntity {
+public class FashionItem extends BaseEntity implements AuthorOwnedEntity {
     @Column(nullable = false)
     private String name;
 
@@ -41,5 +41,12 @@ private Category category;
         this.name = name;
         this.description = description;
     }
-
+    @Override
+    public String getAuthorEmail() {
+        if (this.owner != null) {
+            return this.owner.getEmail();
+        }
+        // Return an appropriate value (e.g., a placeholder) if owner is null
+        return "Unknown";
+    }
 }

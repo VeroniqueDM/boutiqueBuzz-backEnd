@@ -11,6 +11,8 @@ public class CreateCollectionRequestDTO {
 
     @NotBlank(message = "Description is required")
     private String description;
-    @JsonIgnore
-    private Long designerId;
+//    @JsonIgnore
+////    private Long designerId;
+@JsonIgnore
+private Long ownerId;
 }

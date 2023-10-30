@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "fashion_news")
-public class NewsArticle extends BaseEntity {
+public class NewsArticle extends BaseEntity implements AuthorOwnedEntity {
     @Column(nullable = false)
     private String title;
 
@@ -27,11 +27,20 @@ public class NewsArticle extends BaseEntity {
 //    @ManyToOne
 //    @JoinColumn(name = "designer_id", nullable = false)
 //    private Designer designer;
-
+@ManyToOne
+@JoinColumn(name = "owner_id", nullable = false)
+private UserEntity owner;
     public NewsArticle(String title, String content, LocalDateTime publishedAt) {
         this.title = title;
         this.content = content;
         this.publishedAt = publishedAt;
     }
-
+    @Override
+    public String getAuthorEmail() {
+        if (this.owner != null) {
+            return this.owner.getEmail();
+        }
+        // Return an appropriate value (e.g., a placeholder) if owner is null
+        return "Unknown";
+    }
 }

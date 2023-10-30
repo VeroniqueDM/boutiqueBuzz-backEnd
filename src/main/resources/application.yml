@@ -52,7 +52,7 @@ spring:
           google:
             client-id: 762697933875-4573iu8i6s6te9obpnpfnmkudrs0fjaq.apps.googleusercontent.com
             client-secret: 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
-            scope: openId, profile, email
+#            scope: openId, profile, email
       resourceserver:
         jwt:
           issuer-uri: https://accounts.google.com

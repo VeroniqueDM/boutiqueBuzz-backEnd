@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,7 @@ public class DesignerCollectionController {
         CollectionResponseDTO createdDesignerCollection = designerCollectionService.createCollection(designerCollectionDTO);
         return new ResponseEntity<>(createdDesignerCollection, HttpStatus.CREATED);
     }
+    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(DesignerCollection).class, 'WRITE')")
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDesignerCollection(@PathVariable Long id, @RequestBody @Valid UpdateCollectionRequestDTO designerCollectionDTO, BindingResult bindingResult) {
@@ -70,6 +72,7 @@ public class DesignerCollectionController {
         }
     }
 
+    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(DesignerCollection).class, 'WRITE')")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDesignerCollection(@PathVariable Long id) {
