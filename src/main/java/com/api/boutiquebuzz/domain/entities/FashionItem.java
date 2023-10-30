@@ -29,7 +29,7 @@ public class FashionItem extends BaseEntity {
 //    @JoinColumn(name = "designer_id", nullable = false)
 //    private Designer designer;
 @ManyToOne
-@JoinColumn(name = "designer_id", nullable = false)
+@JoinColumn(name = "owner_id", nullable = false)
 private UserEntity owner;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "collection_id")

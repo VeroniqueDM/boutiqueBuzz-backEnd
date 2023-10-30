@@ -2,8 +2,8 @@ package com.api.boutiquebuzz.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
 @Entity
 @Table(name="user_entity")
 @Data
@@ -13,10 +13,11 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column
     private String name;
-//    private String username;
-
+    @Column
+    private String username;
+    @Column
     private String email;
 
     @Column(name = "role")
@@ -28,6 +29,11 @@ public class UserEntity {
     private RegistrationSource source;
 
     public UserEntity(String email) {
+        this.email = email;
+    }
+
+    public UserEntity(String username, String email) {
+        this.username = username;
         this.email = email;
     }
 }

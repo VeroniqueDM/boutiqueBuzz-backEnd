@@ -59,12 +59,15 @@ spring:
           jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
 
 
+#logging:
+#  level:
+#    web: DEBUG
+#    org.springframework: DEBUG
+#    org.hibernate.SQL: DEBUG
+#    org.hibernate.type.descriptor: DEBUG
+
 logging:
   level:
-    web: DEBUG
-    org.springframework: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor: DEBUG
-
+    root: DEBUG
 frontend:
   url: http://localhost:3000

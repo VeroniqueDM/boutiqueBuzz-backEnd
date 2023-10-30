@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -88,15 +89,17 @@ public FashionItemResponseDTO createFashionItem(CreateFashionItemRequestDTO fash
 
     // You should have a UserDetails implementation that includes your user details
     if (authentication != null) {
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        DefaultOAuth2User userDetails = (DefaultOAuth2User) authentication.getPrincipal();
 
-        // Use the user details to set the owner of the item
+//         Use the user details to set the owner of the item
 //        UserEntity owner = userRepository.findByUsername(userDetails.getUsername());
+        UserEntity owner = userRepository.findByEmail(userDetails.getAttribute("email")).get();
 
-//        if (owner == null) {
-//            // Handle the case when the owner doesn't exist or throw an exception
-//            return null;
-//        }
+        if (owner == null) {
+            // Handle the case when the owner doesn't exist or throw an exception
+            return null;
+        }
 
         FashionItem fashionItem = modelMapper.map(fashionItemDTO, FashionItem.class);
         Category category = categoryRepository.findById(fashionItemDTO.getCategory()).orElse(null);
@@ -108,7 +111,7 @@ public FashionItemResponseDTO createFashionItem(CreateFashionItemRequestDTO fash
         }
 
         fashionItem.setCategory(category);
-//        fashionItem.setOwner(owner); // Set the owner of the item
+        fashionItem.setOwner(owner); // Set the owner of the item
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         fashionItem.setCreatedAt(currentDateTime);

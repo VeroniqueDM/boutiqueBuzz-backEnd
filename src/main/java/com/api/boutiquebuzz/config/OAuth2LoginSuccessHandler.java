@@ -38,7 +38,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
         if ("github".equals(oAuth2AuthenticationToken.getAuthorizedClientRegistrationId())) {
             DefaultOAuth2User principal = (DefaultOAuth2User) authentication.getPrincipal();
             Map<String, Object> attributes = principal.getAttributes();
-//            String username = attributes.getOrDefault("login","").toString();
+            String username = attributes.getOrDefault("login","").toString();
             String email = attributes.getOrDefault("email", "").toString();
             String name = attributes.getOrDefault("name", "").toString();
             userService.findByEmail(email)
@@ -53,7 +53,7 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
                         userEntity.setRole(UserRole.ROLE_USER);
                         userEntity.setEmail(email);
                         userEntity.setName(name);
-//                        userEntity.setUsername(username);
+                        userEntity.setUsername(username);
                         userEntity.setSource(RegistrationSource.GITHUB);
                         userService.save(userEntity);
                         DefaultOAuth2User newUser = new DefaultOAuth2User(List.of(new SimpleGrantedAuthority(userEntity.getRole().name())),
