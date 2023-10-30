@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,8 +44,31 @@ public class FashionItemController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(FashionItem).class, 'WRITE')")
-
+//    @GetMapping
+//    public ResponseEntity<List<FashionItemResponseDTO>> getFashionItemsByCategory(@RequestParam(name = "category", required = false) Long categoryId) {
+//        List<FashionItemResponseDTO> fashionItemResponseDTOs;
+//
+//        if (categoryId != null) {
+//            fashionItemResponseDTOs = fashionItemService.getFashionItemsByCategoryId(categoryId);
+//        } else {
+//            fashionItemResponseDTOs = fashionItemService.getAllFashionItems();
+//        }
+//
+//        return ResponseEntity.ok(fashionItemResponseDTOs);
+//    }
+    @GetMapping("/filter")
+    public ResponseEntity<List<FashionItemResponseDTO>> filterFashionItemsByCategory(
+            @RequestParam(name = "category") Long categoryId,
+            Authentication authentication
+    ) {
+        if (!authentication.isAuthenticated()) {
+            // User is authenticated
+            // Your code here
+            System.out.println("not authenticated ??????~~~!!!!!!!!!!");
+        }
+        List<FashionItemResponseDTO> filteredItems = fashionItemService.getFashionItemsByCategoryId(categoryId);
+        return ResponseEntity.ok(filteredItems);
+    }
     @PostMapping
     public ResponseEntity<?> createFashionItem(@RequestBody @Valid CreateFashionItemRequestDTO fashionItemDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -59,7 +83,6 @@ public class FashionItemController {
         return new ResponseEntity<>(createdFashionItem, HttpStatus.CREATED);
     }
     @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(FashionItem).class, 'WRITE')")
-
     @PutMapping("/{id}")
     public ResponseEntity<?> updateFashionItem(@PathVariable Long id, @RequestBody @Valid UpdateFashionItemRequestDTO fashionItemDTO, BindingResult bindingResult) {
         ResponseEntity<?> error = ErrorUtil.getErrors(bindingResult);
@@ -71,6 +94,7 @@ public class FashionItemController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(FashionItem).class, 'WRITE')")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFashionItem(@PathVariable Long id) {
@@ -81,4 +105,25 @@ public class FashionItemController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+//    @GetMapping("/filterByCategory")
+//    public ResponseEntity<List<FashionItemResponseDTO>> filterItemsByCategory(
+//            @RequestParam(name = "categoryId", required = false) Long categoryId,
+//            @RequestParam(name = "categoryName", required = false) String categoryName) {
+//
+//        List<FashionItemResponseDTO> filteredItems = null;
+//
+//        if (categoryId != null) {
+//            // Filter items by category ID
+//            filteredItems = fashionItemService.getFashionItemsByCategoryId(categoryId);
+//        } else if (categoryName != null) {
+//            // Filter items by category name
+//            filteredItems = fashionItemService.getFashionItemsByCategoryName(categoryName);
+//        }
+//
+//        if (filteredItems != null && !filteredItems.isEmpty()) {
+//            return ResponseEntity.ok(filteredItems);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 }

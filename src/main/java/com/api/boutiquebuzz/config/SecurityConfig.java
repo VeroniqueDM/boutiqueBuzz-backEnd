@@ -1,5 +1,7 @@
 package com.api.boutiquebuzz.config;
 
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +10,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -39,6 +42,24 @@ public class SecurityConfig {
 //                    oath2.loginPage("/login").permitAll();
                     oath2.successHandler(oAuth2LoginSuccessHandler);
                 })
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+//                        .logoutSuccessUrl("/login?logout")
+                        .permitAll())
+
+//                .logout(logout -> {
+//                    logout
+//                            .logoutUrl("/logout") // Customize the logout URL
+//                            .logoutSuccessHandler((request, response, authentication) -> {
+//                                HttpSession session = request.getSession(false);
+//                                if (session != null) {
+//                                    session.invalidate();
+//                                }
+//                                SecurityContextHolder.clearContext();
+//
+//                                // Send a success response to the client
+//                                response.setStatus(HttpServletResponse.SC_OK);                            });
+//                })
                 .build();
     }
 

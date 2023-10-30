@@ -17,10 +17,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -177,10 +177,35 @@ public FashionItemResponseDTO createFashionItem(CreateFashionItemRequestDTO fash
 
         if (fashionItem.getOwner() != null) {
             responseDTO.setDesignerName(fashionItem.getOwner().getName());
-            responseDTO.setDesignerEmail(fashionItem.getOwner().getEmail());
+//            responseDTO.setDesignerEmail(fashionItem.getOwner().getEmail());
 //            responseDTO.setDesignerPhone(fashionItem.getDesigner().getPhone());
+            responseDTO.setOwnerId(fashionItem.getOwner().getId());
         }
 
         return responseDTO;
     }
+    @Override
+    public List<FashionItemResponseDTO> getFashionItemsByCategoryId(Long categoryId) {
+        // Retrieve fashion items by category ID
+        List<FashionItem> fashionItems = fashionItemRepository.findByCategoryId(categoryId);
+        return fashionItems.stream()
+                .map(this::mapFashionItemToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FashionItemResponseDTO> getFashionItemsByCategoryName(String categoryName) {
+        // Retrieve fashion items by category name
+        Category category = categoryRepository.findByName(categoryName);
+        if (category == null) {
+            // Handle the case when the category doesn't exist
+            return Collections.emptyList();
+        }
+
+        List<FashionItem> fashionItems = fashionItemRepository.findByCategoryName(categoryName);
+        return fashionItems.stream()
+                .map(this::mapFashionItemToDTO)
+                .collect(Collectors.toList());
+    }
+
 }

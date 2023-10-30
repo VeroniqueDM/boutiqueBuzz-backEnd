@@ -16,4 +16,7 @@ public interface FashionItemService {
     FashionItemResponseDTO updateFashionItem(Long id, UpdateFashionItemRequestDTO updateFashionItemDTO);
     FashionItemResponseDTO deleteFashionItem(Long fashionItemId);
 
+    List<FashionItemResponseDTO> getFashionItemsByCategoryId(Long categoryId);
+
+    List<FashionItemResponseDTO> getFashionItemsByCategoryName(String categoryName);
 }

@@ -10,4 +10,6 @@ public class EventResponseDTO {
     private String title;
     private String description;
     private LocalDateTime eventDate;
+    private Long ownerId;
+
 }
