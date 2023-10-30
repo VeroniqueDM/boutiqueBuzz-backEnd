@@ -25,13 +25,18 @@ public class FashionItem extends BaseEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "designer_id", nullable = false)
-    private Designer designer;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "collection_id")
-    private DesignerCollection collection;
+//    @ManyToOne
+//    @JoinColumn(name = "designer_id", nullable = false)
+//    private Designer designer;
+@ManyToOne
+@JoinColumn(name = "designer_id", nullable = false)
+private UserEntity owner;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "collection_id")
+//    private DesignerCollection collection;
+@ManyToOne(fetch = FetchType.LAZY)
+@JoinColumn(name = "category_id")
+private Category category;
     public FashionItem(String name, String description) {
         this.name = name;
         this.description = description;

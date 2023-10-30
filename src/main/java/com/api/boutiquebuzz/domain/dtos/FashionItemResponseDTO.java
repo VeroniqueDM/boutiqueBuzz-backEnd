@@ -11,4 +11,7 @@ public class FashionItemResponseDTO {
     private String designerName;
     private String designerEmail;
     private String designerPhone;
+
+    // Category details
+    private String categoryName;
 }

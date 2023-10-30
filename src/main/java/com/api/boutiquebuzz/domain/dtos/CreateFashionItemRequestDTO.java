@@ -14,5 +14,6 @@ public class CreateFashionItemRequestDTO {
 //    @JsonIgnore
 //    private Long collectionId;
     @JsonIgnore
-    private Long designerId;
+    private Long ownerId;
+    private Long category;
 }

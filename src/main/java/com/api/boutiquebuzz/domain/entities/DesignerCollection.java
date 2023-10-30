@@ -31,16 +31,16 @@ public class DesignerCollection extends BaseEntity {
     @JoinColumn(name = "designer_id", nullable = false)
     private Designer designer;
 
-    @OneToMany(mappedBy = "collection",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FashionItem> fashionItems;
+//    @OneToMany(mappedBy = "collection",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<FashionItem> fashionItems;
 
     public DesignerCollection(String name, String description) {
         this.name = name;
         this.description = description;
-        this.fashionItems = new ArrayList<>();
+//        this.fashionItems = new ArrayList<>();
     }
-    public void addItem(FashionItem fashionItem) {
-        fashionItems.add(fashionItem);
-        fashionItem.setCollection(this);
-    }
+//    public void addItem(FashionItem fashionItem) {
+//        fashionItems.add(fashionItem);
+//        fashionItem.setCollection(this);
+//    }
 }

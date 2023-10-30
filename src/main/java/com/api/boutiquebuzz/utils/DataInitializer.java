@@ -66,7 +66,7 @@ public void initializeData() {
             fashionItemDTO.setName(faker.lorem().words(2).toString());
             fashionItemDTO.setDescription(faker.lorem().sentence());
 //                fashionItemDTO.setCollectionId(createdCollection.getId());
-            fashionItemDTO.setDesignerId(createdDesigner.getId());
+//            fashionItemDTO.setDesignerId(createdDesigner.getId());
 //                fashionItemService.createFashionItem(fashionItemDTO);
             fashionItemService.createFashionItemWithCollection(createdCollection.getId(),fashionItemDTO);
 //                collectionService.addItemToCollection()

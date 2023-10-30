@@ -1,4 +1,5 @@
 package com.api.boutiquebuzz.web;
+import com.api.boutiquebuzz.domain.dtos.FashionItemResponseDTO;
 import com.api.boutiquebuzz.domain.dtos.UpdateCollectionRequestDTO;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 
@@ -68,6 +69,7 @@ public class DesignerCollectionController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDesignerCollection(@PathVariable Long id) {
