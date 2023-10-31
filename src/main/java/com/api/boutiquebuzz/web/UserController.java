@@ -1,6 +1,7 @@
 package com.api.boutiquebuzz.web;
 
 import com.api.boutiquebuzz.domain.dtos.UserDTO;
+import com.api.boutiquebuzz.domain.dtos.UserProfileDto;
 import com.api.boutiquebuzz.domain.entities.UserEntity;
 import com.api.boutiquebuzz.domain.entities.UserRole;
 import com.api.boutiquebuzz.repositories.UserEntityRepository;
@@ -53,5 +54,10 @@ private final ModelMapper modelMapper;
         SecurityContextHolder.clearContext();
         request.getSession().invalidate();
         return ResponseEntity.ok("Logout successful");
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<UserProfileDto> getUserById(@PathVariable Long id) {
+        UserProfileDto userDTO = userService.getOneById(id);
+        return ResponseEntity.ok(userDTO);
     }
 }

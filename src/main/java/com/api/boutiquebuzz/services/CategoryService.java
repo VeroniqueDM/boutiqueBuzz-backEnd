@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,5 +50,17 @@ public class CategoryService {
 
     public void deleteCategory(Long id) {
         categoryRepository.deleteById(id);
+    }
+
+    @Transactional
+    public CategoryResponseDTO getCategoryById(Long id) {
+        // Retrieve the category entity by ID from the repository
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with ID: " + id));
+
+        // Use ModelMapper to map the entity to a DTO
+        CategoryResponseDTO categoryDTO = modelMapper.map(category, CategoryResponseDTO.class);
+
+        return categoryDTO;
     }
 }

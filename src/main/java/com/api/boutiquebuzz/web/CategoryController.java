@@ -38,4 +38,9 @@ public class CategoryController {
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
     }
+
+    @GetMapping("/{id}")  // Define the "get one" mapping by ID
+    public CategoryResponseDTO getCategoryById(@PathVariable Long id) {
+        return categoryService.getCategoryById(id);
+    }
 }
