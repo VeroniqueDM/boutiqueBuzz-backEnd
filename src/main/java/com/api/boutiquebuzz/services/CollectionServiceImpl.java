@@ -1,8 +1,10 @@
 package com.api.boutiquebuzz.services;
 import com.api.boutiquebuzz.domain.dtos.CollectionResponseDTO;
 import com.api.boutiquebuzz.domain.dtos.CreateCollectionRequestDTO;
+import com.api.boutiquebuzz.domain.dtos.FashionItemResponseDTO;
 import com.api.boutiquebuzz.domain.dtos.UpdateCollectionRequestDTO;
 import com.api.boutiquebuzz.domain.entities.DesignerCollection;
+import com.api.boutiquebuzz.domain.entities.FashionItem;
 import com.api.boutiquebuzz.domain.entities.UserEntity;
 import com.api.boutiquebuzz.repositories.CollectionRepository;
 import com.api.boutiquebuzz.repositories.UserEntityRepository;
@@ -33,24 +35,41 @@ public class CollectionServiceImpl implements CollectionService {
         this.modelMapper = modelMapper;
     }
 
-    @Override
-    public List<CollectionResponseDTO> getAllCollections() {
-        List<DesignerCollection> collections = collectionRepository.findAll();
-        return collections.stream()
-                .map(collection -> modelMapper.map(collection, CollectionResponseDTO.class))
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public List<CollectionResponseDTO> getAllCollections() {
+//        List<DesignerCollection> collections = collectionRepository.findAll();
+//        return collections.stream()
+//                .map(collection -> modelMapper.map(collection, CollectionResponseDTO.class))
+//                .collect(Collectors.toList());
+//    }
 
+    @Override   
+public List<CollectionResponseDTO> getAllCollections() {
+    List<DesignerCollection> collections = collectionRepository.findAll();
+    return collections.stream()
+            .map(this::mapCollectionToDTO)
+            .collect(Collectors.toList());
+}
+
+//    @Override
+//    public CollectionResponseDTO getCollectionById(Long collectionId) {
+//        Optional<DesignerCollection> collectionOptional = collectionRepository.findById(collectionId);
+//        if (collectionOptional.isPresent()) {
+//            return modelMapper.map(collectionOptional.get(), CollectionResponseDTO.class);
+//        } else {
+//            throw new ResourceNotFoundException(String.format(ErrorConstants.COLLECTION_NOT_FOUND_MESSAGE, collectionId));
+//        }
+//    }
     @Override
     public CollectionResponseDTO getCollectionById(Long collectionId) {
         Optional<DesignerCollection> collectionOptional = collectionRepository.findById(collectionId);
         if (collectionOptional.isPresent()) {
-            return modelMapper.map(collectionOptional.get(), CollectionResponseDTO.class);
+            DesignerCollection designerCollection = collectionOptional.get();
+            return mapCollectionToDTO(designerCollection);
         } else {
             throw new ResourceNotFoundException(String.format(ErrorConstants.COLLECTION_NOT_FOUND_MESSAGE, collectionId));
         }
     }
-
 //    @Override
 //    public CollectionResponseDTO createCollection(CreateCollectionRequestDTO collectionDTO) {
 //        DesignerCollection collection = modelMapper.map(collectionDTO, DesignerCollection.class);
@@ -126,4 +145,16 @@ public CollectionResponseDTO createCollection(CreateCollectionRequestDTO collect
 //        collection.addItem(fashionItem);
 //        return collectionRepository.save(collection);
 //    }
+public CollectionResponseDTO mapCollectionToDTO(DesignerCollection designerCollection) {
+    CollectionResponseDTO responseDTO = modelMapper.map(designerCollection, CollectionResponseDTO.class);
+
+    if (designerCollection.getOwner() != null) {
+        responseDTO.setDesignerName(designerCollection.getOwner().getName());
+//            responseDTO.setDesignerEmail(fashionItem.getOwner().getEmail());
+//            responseDTO.setDesignerPhone(fashionItem.getDesigner().getPhone());
+        responseDTO.setOwnerId(designerCollection.getOwner().getId());
+    }
+
+    return responseDTO;
+}
 }

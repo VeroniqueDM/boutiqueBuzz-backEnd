@@ -12,5 +12,6 @@ public class CollectionResponseDTO {
     private String description;
     private Long ownerId;
     private List<String> imageUrls;
+    private String designerName;
 
 }
