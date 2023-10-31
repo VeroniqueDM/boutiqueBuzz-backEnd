@@ -26,7 +26,10 @@ public class DesignerCollection extends BaseEntity implements AuthorOwnedEntity 
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
+    @ElementCollection
+    @CollectionTable(name = "collection_images", joinColumns = @JoinColumn(name = "collection_id"))
+    @Column(name = "image_url")
+    private List<String> imageUrls = new ArrayList<>();
 //    @ManyToOne
 //    @JoinColumn(name = "designer_id", nullable = false)
 //    private UserEntity designer;
@@ -39,7 +42,7 @@ private UserEntity owner;
     public DesignerCollection(String name, String description) {
         this.name = name;
         this.description = description;
-//        this.fashionItems = new ArrayList<>();
+        this.imageUrls = new ArrayList<>();
     }
 
     @Override

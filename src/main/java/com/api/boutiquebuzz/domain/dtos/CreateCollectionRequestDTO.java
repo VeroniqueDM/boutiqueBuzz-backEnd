@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CreateCollectionRequestDTO {
     @NotBlank(message = "Name is required")
@@ -15,4 +17,6 @@ public class CreateCollectionRequestDTO {
 ////    private Long designerId;
 @JsonIgnore
 private Long ownerId;
+    private List<String> imageUrls;
+
 }
