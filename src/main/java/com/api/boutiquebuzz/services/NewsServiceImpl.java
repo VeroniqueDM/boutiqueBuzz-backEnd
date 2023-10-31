@@ -63,18 +63,14 @@ public class NewsServiceImpl implements NewsService {
 //    }
 @Override
 public NewsResponseDTO createNews(CreateNewsRequestDTO newsDTO) {
-    // Retrieve the authenticated user (you need to have user authentication in place)
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-    // You should have a UserDetails implementation that includes your user details
     if (authentication != null) {
         DefaultOAuth2User userDetails = (DefaultOAuth2User) authentication.getPrincipal();
 
-        // Use the user details to set the owner of the news article
         UserEntity owner = userRepository.findByEmail(userDetails.getAttribute("email")).orElse(null);
 
         if (owner == null) {
-            // Handle the case when the owner doesn't exist or throw an exception
             return null;
         }
 
@@ -83,14 +79,13 @@ public NewsResponseDTO createNews(CreateNewsRequestDTO newsDTO) {
         news.setPublishedAt(currentDateTime);
         news.setUpdatedAt(currentDateTime);
 
-        // Set the owner of the news article
         news.setOwner(owner);
 
         NewsArticle savedNews = fashionNewsRepository.save(news);
         return modelMapper.map(savedNews, NewsResponseDTO.class);
     }
 
-    return null; // Handle the case when there's no authenticated user
+    return null;
 }
     @Override
     public NewsResponseDTO updateNews(Long newsId, UpdateNewsRequestDTO updateNewsDTO) {
@@ -132,7 +127,6 @@ public NewsResponseDTO createNews(CreateNewsRequestDTO newsDTO) {
     public List<NewsResponseDTO> searchNews(String keyword) {
         List<NewsArticle> results = fashionNewsRepository.searchNews(keyword);
 
-        // Convert the results to DTOs
         List<NewsResponseDTO> newsDTOs = results.stream()
                 .map(news -> modelMapper.map(news, NewsResponseDTO.class))
                 .collect(Collectors.toList());

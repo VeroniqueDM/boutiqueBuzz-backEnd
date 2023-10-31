@@ -14,6 +14,5 @@ public class UpdateFashionItemRequestDTO {
     @JsonIgnore
     private Long ownerId;
     private Long category;
-    private String imageUrl; // Add the image URL attribute
-
+    private String imageUrl;
 }

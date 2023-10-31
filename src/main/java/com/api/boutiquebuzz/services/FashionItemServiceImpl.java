@@ -84,20 +84,14 @@ public class FashionItemServiceImpl implements FashionItemService {
 
 @Override
 public FashionItemResponseDTO createFashionItem(CreateFashionItemRequestDTO fashionItemDTO) {
-    // Retrieve the authenticated user (you need to have user authentication in place)
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-    // You should have a UserDetails implementation that includes your user details
     if (authentication != null) {
-//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         DefaultOAuth2User userDetails = (DefaultOAuth2User) authentication.getPrincipal();
 
-//         Use the user details to set the owner of the item
-//        UserEntity owner = userRepository.findByUsername(userDetails.getUsername());
         UserEntity owner = userRepository.findByEmail(userDetails.getAttribute("email")).get();
 
         if (owner == null) {
-            // Handle the case when the owner doesn't exist or throw an exception
             return null;
         }
 
@@ -105,13 +99,11 @@ public FashionItemResponseDTO createFashionItem(CreateFashionItemRequestDTO fash
         Category category = categoryRepository.findById(fashionItemDTO.getCategory()).orElse(null);
 
         if (category == null) {
-            // Handle the case when the category doesn't exist or throw an exception
-            // create a new category and set its name
             return null;
         }
 
         fashionItem.setCategory(category);
-        fashionItem.setOwner(owner); // Set the owner of the item
+        fashionItem.setOwner(owner);
 
         LocalDateTime currentDateTime = LocalDateTime.now();
         fashionItem.setCreatedAt(currentDateTime);
@@ -120,7 +112,7 @@ public FashionItemResponseDTO createFashionItem(CreateFashionItemRequestDTO fash
         return mapFashionItemToDTO(savedFashionItem);
     }
 
-    return null; // Handle the case when there's no authenticated user
+    return null;
 }
     @Override
     public FashionItemResponseDTO createFashionItemWithCollection(Long collectionId, CreateFashionItemRequestDTO fashionItemDTO) {
@@ -195,10 +187,8 @@ public FashionItemResponseDTO createFashionItem(CreateFashionItemRequestDTO fash
 
     @Override
     public List<FashionItemResponseDTO> getFashionItemsByCategoryName(String categoryName) {
-        // Retrieve fashion items by category name
         Category category = categoryRepository.findByName(categoryName);
         if (category == null) {
-            // Handle the case when the category doesn't exist
             return Collections.emptyList();
         }
 

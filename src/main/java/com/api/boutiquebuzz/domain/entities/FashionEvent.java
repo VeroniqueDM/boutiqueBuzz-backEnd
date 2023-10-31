@@ -42,7 +42,6 @@ private UserEntity owner;
         if (this.owner != null) {
             return this.owner.getEmail();
         }
-        // Return an appropriate value (e.g., a placeholder) if owner is null
         return "Unknown";
     }
 }

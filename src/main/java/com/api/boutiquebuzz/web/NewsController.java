@@ -58,7 +58,8 @@ public class NewsController {
         NewsResponseDTO createdNews = newsService.createNews(newsDTO);
         return new ResponseEntity<>(createdNews, HttpStatus.CREATED);
     }
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(NewsArticle).class, 'WRITE')")
+//    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(com.api.boutiquebuzz.domain.entities.NewsArticle).class, 'WRITE')")
+// TODO: fix this
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateNews(@PathVariable Long id, @RequestBody @Valid UpdateNewsRequestDTO newsDTO, BindingResult bindingResult) {
@@ -71,8 +72,7 @@ public class NewsController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(NewsArticle).class, 'WRITE')")
-
+    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'NewsArticle', 'DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteNews(@PathVariable Long id) {
         try {

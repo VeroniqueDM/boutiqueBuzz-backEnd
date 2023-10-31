@@ -54,11 +54,9 @@ public class CategoryService {
 
     @Transactional
     public CategoryResponseDTO getCategoryById(Long id) {
-        // Retrieve the category entity by ID from the repository
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found with ID: " + id));
 
-        // Use ModelMapper to map the entity to a DTO
         CategoryResponseDTO categoryDTO = modelMapper.map(category, CategoryResponseDTO.class);
 
         return categoryDTO;

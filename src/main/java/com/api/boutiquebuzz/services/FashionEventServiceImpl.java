@@ -64,18 +64,14 @@ public class FashionEventServiceImpl implements EventService {
 
     @Override
     public EventResponseDTO createEvent(CreateEventRequestDTO eventDTO) {
-        // Retrieve the authenticated user (you need to have user authentication in place)
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // You should have a UserDetails implementation that includes your user details
         if (authentication != null) {
             DefaultOAuth2User userDetails = (DefaultOAuth2User) authentication.getPrincipal();
 
-            // Use the user details to set the owner of the event
             UserEntity owner = userRepository.findByEmail(userDetails.getAttribute("email")).orElse(null);
 
             if (owner == null) {
-                // Handle the case when the owner doesn't exist or throw an exception
                 return null;
             }
 
@@ -84,14 +80,13 @@ public class FashionEventServiceImpl implements EventService {
             event.setPublishedAt(currentDateTime);
             event.setUpdatedAt(currentDateTime);
 
-            // Set the owner of the event
             event.setOwner(owner);
 
             FashionEvent savedEvent = fashionEventRepository.save(event);
             return modelMapper.map(savedEvent, EventResponseDTO.class);
         }
 
-        return null; // Handle the case when there's no authenticated user
+        return null;
     }
     @Override
     public EventResponseDTO updateEvent(Long eventId, UpdateEventRequestDTO updateEventDTO) {

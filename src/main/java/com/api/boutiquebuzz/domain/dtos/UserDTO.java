@@ -10,8 +10,8 @@ public class UserDTO {
     private String email;
     private String role;
     private String source;
+    private String imageUrl;
 
-    // Getters and setters for the fields
 
     public UserDTO() {
     }

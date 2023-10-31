@@ -8,5 +8,4 @@ public class CreateCategoryRequestDTO {
     private String name;
     private String description;
 
-    // Constructors, getters, setters, and other methods
 }

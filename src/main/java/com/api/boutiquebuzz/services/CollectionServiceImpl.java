@@ -62,18 +62,14 @@ public class CollectionServiceImpl implements CollectionService {
 //    }
 @Override
 public CollectionResponseDTO createCollection(CreateCollectionRequestDTO collectionDTO) {
-    // Retrieve the authenticated user (you need to have user authentication in place)
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-    // You should have a UserDetails implementation that includes your user details
     if (authentication != null) {
         DefaultOAuth2User userDetails = (DefaultOAuth2User) authentication.getPrincipal();
 
-        // Use the user details to set the owner of the collection
         UserEntity owner = userRepository.findByEmail(userDetails.getAttribute("email")).orElse(null);
 
         if (owner == null) {
-            // Handle the case when the owner doesn't exist or throw an exception
             return null;
         }
 
@@ -82,14 +78,13 @@ public CollectionResponseDTO createCollection(CreateCollectionRequestDTO collect
         collection.setCreatedAt(currentDateTime);
         collection.setUpdatedAt(currentDateTime);
 
-        // Set the owner of the collection
         collection.setOwner(owner);
 
         DesignerCollection savedCollection = collectionRepository.save(collection);
         return modelMapper.map(savedCollection, CollectionResponseDTO.class);
     }
 
-    return null; // Handle the case when there's no authenticated user
+    return null;
 }
     @Override
     public CollectionResponseDTO updateCollection(Long collectionId, UpdateCollectionRequestDTO updateCollectionDTO) {

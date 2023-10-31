@@ -58,9 +58,11 @@ public class DesignerCollectionController {
         CollectionResponseDTO createdDesignerCollection = designerCollectionService.createCollection(designerCollectionDTO);
         return new ResponseEntity<>(createdDesignerCollection, HttpStatus.CREATED);
     }
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(DesignerCollection).class, 'WRITE')")
 
     @PutMapping("/{id}")
+//    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(DesignerCollection).class, 'WRITE')")
+    // TODO: fix this
+
     public ResponseEntity<?> updateDesignerCollection(@PathVariable Long id, @RequestBody @Valid UpdateCollectionRequestDTO designerCollectionDTO, BindingResult bindingResult) {
         ResponseEntity<?> error = ErrorUtil.getErrors(bindingResult);
         if (error != null) return error;
@@ -72,9 +74,9 @@ public class DesignerCollectionController {
         }
     }
 
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(DesignerCollection).class, 'WRITE')")
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'DesignerCollection', 'DELETE')")
     public ResponseEntity<?> deleteDesignerCollection(@PathVariable Long id) {
         try {
             CollectionResponseDTO deletedDesignerCollection = designerCollectionService.deleteCollection(id);

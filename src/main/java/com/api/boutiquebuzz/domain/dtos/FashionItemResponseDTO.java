@@ -15,6 +15,6 @@ public class FashionItemResponseDTO {
 //    // Category details
 //    private String categoryName;
     private Long ownerId;
-    private String imageUrl; // Add the image URL attribute
+    private String imageUrl;
 
 }

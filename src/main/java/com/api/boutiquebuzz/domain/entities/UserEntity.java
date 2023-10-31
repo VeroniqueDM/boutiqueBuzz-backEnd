@@ -27,7 +27,8 @@ public class UserEntity {
     @Column(name = "source")
     @Enumerated(EnumType.STRING)
     private RegistrationSource source;
-
+    @Column
+    private String imageUrl;
     public UserEntity(String email) {
         this.email = email;
     }

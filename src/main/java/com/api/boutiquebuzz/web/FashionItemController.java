@@ -62,8 +62,7 @@ public class FashionItemController {
             Authentication authentication
     ) {
         if (!authentication.isAuthenticated()) {
-            // User is authenticated
-            // Your code here
+
             System.out.println("not authenticated ??????~~~!!!!!!!!!!");
         }
         List<FashionItemResponseDTO> filteredItems = fashionItemService.getFashionItemsByCategoryId(categoryId);
@@ -82,7 +81,9 @@ public class FashionItemController {
         FashionItemResponseDTO createdFashionItem = fashionItemService.createFashionItem(fashionItemDTO);
         return new ResponseEntity<>(createdFashionItem, HttpStatus.CREATED);
     }
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(FashionItem).class, 'WRITE')")
+    // TODO: fix this
+
+    //    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(com.api.boutiquebuzz.domain.entities.FashionItem).class, 'WRITE')")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateFashionItem(@PathVariable Long id, @RequestBody @Valid UpdateFashionItemRequestDTO fashionItemDTO, BindingResult bindingResult) {
         ResponseEntity<?> error = ErrorUtil.getErrors(bindingResult);
@@ -94,7 +95,8 @@ public class FashionItemController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(FashionItem).class, 'WRITE')")
+//    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(com.api.boutiquebuzz.domain.entities.FashionItem), 'DELETE')")
+@PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'FashionItem', 'DELETE')")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFashionItem(@PathVariable Long id) {

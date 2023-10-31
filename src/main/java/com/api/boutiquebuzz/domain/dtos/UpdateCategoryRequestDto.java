@@ -8,5 +8,4 @@ public class UpdateCategoryRequestDto {
     private String name;
     private String description;
 
-    // Constructors, getters, setters, and other methods
 }

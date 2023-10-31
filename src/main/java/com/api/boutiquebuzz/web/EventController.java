@@ -58,8 +58,10 @@ public class EventController {
         EventResponseDTO createdEvent = eventService.createEvent(eventDTO);
         return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
     }
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(FashionEvent).class, 'WRITE')")
-
+//    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(FashionEvent).class, 'WRITE')")
+//    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, fashionEvent, 'WRITE')")
+//    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(com.api.boutiquebuzz.domain.entities.FashionEvent), 'WRITE')")
+// TODO: fix this
     @PutMapping("/{id}")
     public ResponseEntity<?> updateEvent(@PathVariable Long id, @RequestBody @Valid UpdateEventRequestDTO eventDTO, BindingResult bindingResult) {
         ResponseEntity<?> error = ErrorUtil.getErrors(bindingResult);
@@ -71,7 +73,9 @@ public class EventController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(FashionEvent).class, 'WRITE')")
+//    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(FashionEvent), 'DELETE')")
+//    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(com.api.boutiquebuzz.domain.entities.FashionEvent), 'DELETE', #id)")
+    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'FashionEvent', 'DELETE')")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteEvent(@PathVariable Long id) {

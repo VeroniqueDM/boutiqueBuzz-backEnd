@@ -30,13 +30,11 @@ private final ModelMapper modelMapper;
     private final UserEntityRepository userRepository;
     @GetMapping("/user")
     public UserDTO getUser(Authentication authentication) {
-        // Retrieve the user information from the Authentication object
         DefaultOAuth2User userDetails = (DefaultOAuth2User) authentication.getPrincipal();
         UserEntity owner = userRepository.findByEmail(userDetails.getAttribute("email")).get();
 
-        // Create a UserDTO with the relevant user information
         UserDTO userDTO = modelMapper.map(owner,UserDTO.class);
-//        userDTO.setUsername(userDetails.getAttributes().get("login")); // You can add other user details
+//        userDTO.setUsername(userDetails.getAttributes().get("login"));
 //        userDTO.setId(userDetails.ge);
         return userDTO;
     }
@@ -50,7 +48,6 @@ private final ModelMapper modelMapper;
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
-        // Clear the authentication and invalidate the session to log out the user
         SecurityContextHolder.clearContext();
         request.getSession().invalidate();
         return ResponseEntity.ok("Logout successful");
