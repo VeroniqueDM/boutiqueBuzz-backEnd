@@ -43,13 +43,13 @@ public class CollectionServiceImpl implements CollectionService {
 //                .collect(Collectors.toList());
 //    }
 
-    @Override   
-public List<CollectionResponseDTO> getAllCollections() {
-    List<DesignerCollection> collections = collectionRepository.findAll();
-    return collections.stream()
-            .map(this::mapCollectionToDTO)
-            .collect(Collectors.toList());
-}
+    @Override
+    public List<CollectionResponseDTO> getAllCollections() {
+        List<DesignerCollection> collections = collectionRepository.findAll();
+        return collections.stream()
+                .map(this::mapCollectionToDTO)
+                .collect(Collectors.toList());
+    }
 
 //    @Override
 //    public CollectionResponseDTO getCollectionById(Long collectionId) {

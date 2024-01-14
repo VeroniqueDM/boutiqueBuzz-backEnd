@@ -30,6 +30,6 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userEntityRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
 
-        return new UserProfileDto(user.getId(), user.getName(), user.getUsername(), user.getEmail());
+        return new UserProfileDto(user.getId(), user.getName(), user.getUsername(), user.getEmail(), user.getRole().toString());
     }
 }
