@@ -66,8 +66,8 @@ spring:
 #    org.hibernate.SQL: DEBUG
 #    org.hibernate.type.descriptor: DEBUG
 
-logging:
-  level:
-    root: DEBUG
+#logging:
+#  level:
+#    root: DEBUG
 frontend:
   url: http://localhost:3000
