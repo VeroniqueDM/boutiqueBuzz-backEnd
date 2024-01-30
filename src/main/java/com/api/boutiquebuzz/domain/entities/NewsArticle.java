@@ -29,7 +29,7 @@ public class NewsArticle extends BaseEntity implements AuthorOwnedEntity {
 //    private Designer designer;
 @ManyToOne
 @JoinColumn(name = "owner_id", nullable = false)
-private UserEntity owner;
+private User owner;
     public NewsArticle(String title, String content, LocalDateTime publishedAt) {
         this.title = title;
         this.content = content;

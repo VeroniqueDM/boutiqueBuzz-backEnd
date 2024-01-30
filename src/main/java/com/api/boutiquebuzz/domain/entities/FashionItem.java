@@ -31,7 +31,7 @@ public class FashionItem extends BaseEntity implements AuthorOwnedEntity {
 //    private Designer designer;
 @ManyToOne
 @JoinColumn(name = "owner_id", nullable = false)
-private UserEntity owner;
+private User owner;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "collection_id")
 //    private DesignerCollection collection;

@@ -42,27 +42,35 @@ spring:
   sql:
     init:
       mode: never
+
+application:
   security:
-    oauth2:
-      client:
-        registration:
-          github:
-            clientId: fcdfedb816b87bdd88b9
-            clientSecret: 0752bfd8ff6cd5821f8666c6dde55deaa2e40503
-          google:
-            client-id: 762697933875-4573iu8i6s6te9obpnpfnmkudrs0fjaq.apps.googleusercontent.com
-            client-secret: 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
-#            scope: openId, profile, email
-      resourceserver:
-        jwt:
-          issuer-uri: https://accounts.google.com
-          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          github:
+#            clientId: fcdfedb816b87bdd88b9
+#            clientSecret: 0752bfd8ff6cd5821f8666c6dde55deaa2e40503
+#          google:
+#            client-id: 762697933875-4573iu8i6s6te9obpnpfnmkudrs0fjaq.apps.googleusercontent.com
+#            client-secret: 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
+##            scope: openId, profile, email
+#      resourceserver:
+#        jwt:
+#          issuer-uri: https://accounts.google.com
+#          jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
 
 
-#logging:
-#  level:
-#    web: DEBUG
-#    org.springframework: DEBUG
+logging:
+  level:
+    web: DEBUG
+    org.springframework: DEBUG
 #    org.hibernate.SQL: DEBUG
 #    org.hibernate.type.descriptor: DEBUG
 
@@ -71,3 +79,9 @@ spring:
 #    root: DEBUG
 frontend:
   url: http://localhost:3000
+
+#jwt:
+#  auth:
+#    app: Spring-Security-App
+#    secret_key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+#    expires_in: 86400000

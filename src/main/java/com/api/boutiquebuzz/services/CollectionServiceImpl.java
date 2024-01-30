@@ -5,9 +5,9 @@ import com.api.boutiquebuzz.domain.dtos.FashionItemResponseDTO;
 import com.api.boutiquebuzz.domain.dtos.UpdateCollectionRequestDTO;
 import com.api.boutiquebuzz.domain.entities.DesignerCollection;
 import com.api.boutiquebuzz.domain.entities.FashionItem;
-import com.api.boutiquebuzz.domain.entities.UserEntity;
+import com.api.boutiquebuzz.domain.entities.User;
 import com.api.boutiquebuzz.repositories.CollectionRepository;
-import com.api.boutiquebuzz.repositories.UserEntityRepository;
+import com.api.boutiquebuzz.repositories.UserRepository;
 import com.api.boutiquebuzz.utils.ErrorConstants;
 
 import com.api.boutiquebuzz.utils.ResourceNotFoundException;
@@ -25,11 +25,11 @@ import java.util.stream.Collectors;
 @Service
 public class CollectionServiceImpl implements CollectionService {
     private final CollectionRepository collectionRepository;
-    private final UserEntityRepository userRepository;
+    private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public CollectionServiceImpl(CollectionRepository collectionRepository, UserEntityRepository userRepository, ModelMapper modelMapper) {
+    public CollectionServiceImpl(CollectionRepository collectionRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.collectionRepository = collectionRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
@@ -86,7 +86,7 @@ public CollectionResponseDTO createCollection(CreateCollectionRequestDTO collect
     if (authentication != null) {
         DefaultOAuth2User userDetails = (DefaultOAuth2User) authentication.getPrincipal();
 
-        UserEntity owner = userRepository.findByEmail(userDetails.getAttribute("email")).orElse(null);
+        User owner = userRepository.findByEmail(userDetails.getAttribute("email")).orElse(null);
 
         if (owner == null) {
             return null;
@@ -152,7 +152,7 @@ public CollectionResponseDTO mapCollectionToDTO(DesignerCollection designerColle
         responseDTO.setDesignerName(designerCollection.getOwner().getName());
 //            responseDTO.setDesignerEmail(fashionItem.getOwner().getEmail());
 //            responseDTO.setDesignerPhone(fashionItem.getDesigner().getPhone());
-        responseDTO.setOwnerId(designerCollection.getOwner().getId());
+        responseDTO.setOwnerId(Long.valueOf(designerCollection.getOwner().getId()));
     }
 
     return responseDTO;

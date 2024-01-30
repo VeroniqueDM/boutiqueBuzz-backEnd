@@ -1,13 +1,8 @@
 package com.api.boutiquebuzz.domain.entities;
 
-//import com.alibou.security.token.Token;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.api.boutiquebuzz.token.Token;
+import jakarta.persistence.*;
+
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -27,8 +22,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String firstname;
     private String lastname;
     private String email;
@@ -54,6 +49,11 @@ public class User implements UserDetails {
     public String getUsername() {
         return email;
     }
+
+    public String getName() {
+        return this.getFirstname() + " " + this.getLastname();
+    }
+
 
     @Override
     public boolean isAccountNonExpired() {

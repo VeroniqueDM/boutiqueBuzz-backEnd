@@ -1,7 +1,6 @@
 package com.api.boutiquebuzz.utils;
 
 import com.api.boutiquebuzz.domain.entities.AuthorOwnedEntity;
-import com.api.boutiquebuzz.domain.entities.UserEntity;
 import com.api.boutiquebuzz.repositories.CollectionRepository;
 import com.api.boutiquebuzz.repositories.EventRepository;
 import com.api.boutiquebuzz.repositories.FashionItemRepository;
@@ -21,7 +20,8 @@ public class CustomPermissionEvaluator implements PermissionEvaluator {
     private final CollectionRepository collectionRepository;
     private final NewsRepository newsRepository;
 
-    public CustomPermissionEvaluator(EventRepository fashionEventRepository, FashionItemRepository fashionItemRepository, CollectionRepository collectionRepository, NewsRepository newsRepository) {
+    public CustomPermissionEvaluator(EventRepository fashionEventRepository, FashionItemRepository fashionItemRepository,
+                                     CollectionRepository collectionRepository, NewsRepository newsRepository) {
         this.fashionEventRepository = fashionEventRepository;
         this.fashionItemRepository = fashionItemRepository;
         this.collectionRepository = collectionRepository;

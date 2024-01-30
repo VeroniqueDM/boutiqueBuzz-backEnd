@@ -1,6 +1,6 @@
-package com.api.boutiquebuzz.domain.entities;
-
-public enum RegistrationSource {
-
-    GITHUB, GOOGLE
-}
+//package com.api.boutiquebuzz.domain.entities;
+//
+//public enum RegistrationSource {
+//
+//    GITHUB, GOOGLE
+//}

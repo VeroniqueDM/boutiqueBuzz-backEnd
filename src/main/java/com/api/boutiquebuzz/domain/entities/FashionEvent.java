@@ -31,7 +31,7 @@ public class FashionEvent extends BaseEntity implements AuthorOwnedEntity {
 //    private Designer designer;
 @ManyToOne
 @JoinColumn(name = "owner_id", nullable = false)
-private UserEntity owner;
+private User owner;
     public FashionEvent(String title, String description, LocalDateTime eventDate) {
         this.title = title;
         this.description = description;
