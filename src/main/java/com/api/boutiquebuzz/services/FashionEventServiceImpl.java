@@ -4,9 +4,11 @@ import com.api.boutiquebuzz.domain.dtos.CreateEventRequestDTO;
 import com.api.boutiquebuzz.domain.dtos.EventResponseDTO;
 import com.api.boutiquebuzz.domain.dtos.UpdateEventRequestDTO;
 import com.api.boutiquebuzz.domain.entities.FashionEvent;
-import com.api.boutiquebuzz.domain.entities.UserEntity;
+
 import com.api.boutiquebuzz.repositories.EventRepository;
-import com.api.boutiquebuzz.repositories.UserEntityRepository;
+
+import com.api.boutiquebuzz.user.User;
+import com.api.boutiquebuzz.user.UserRepository;
 import com.api.boutiquebuzz.utils.ErrorConstants;
 import com.api.boutiquebuzz.utils.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -23,12 +25,12 @@ import java.util.stream.Collectors;
 @Service
 public class FashionEventServiceImpl implements EventService {
     private final EventRepository fashionEventRepository;
-    private final UserEntityRepository userRepository;
+    private final UserRepository userRepository;
 
     private final ModelMapper modelMapper;
 
     @Autowired
-    public FashionEventServiceImpl(EventRepository fashionEventRepository, UserEntityRepository userRepository, ModelMapper modelMapper) {
+    public FashionEventServiceImpl(EventRepository fashionEventRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.fashionEventRepository = fashionEventRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
@@ -69,7 +71,7 @@ public class FashionEventServiceImpl implements EventService {
         if (authentication != null) {
             DefaultOAuth2User userDetails = (DefaultOAuth2User) authentication.getPrincipal();
 
-            UserEntity owner = userRepository.findByEmail(userDetails.getAttribute("email")).orElse(null);
+            User owner = userRepository.findByEmail(userDetails.getAttribute("email")).orElse(null);
 
             if (owner == null) {
                 return null;

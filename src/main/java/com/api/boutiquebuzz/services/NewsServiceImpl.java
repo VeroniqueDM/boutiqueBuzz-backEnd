@@ -1,6 +1,7 @@
 package com.api.boutiquebuzz.services;
-import com.api.boutiquebuzz.domain.entities.UserEntity;
-import com.api.boutiquebuzz.repositories.UserEntityRepository;
+
+import com.api.boutiquebuzz.user.User;
+import com.api.boutiquebuzz.user.UserRepository;
 import com.api.boutiquebuzz.utils.ErrorConstants;
 
 import com.api.boutiquebuzz.domain.dtos.CreateNewsRequestDTO;
@@ -23,12 +24,12 @@ import java.util.stream.Collectors;
 @Service
 public class NewsServiceImpl implements NewsService {
     private final NewsRepository fashionNewsRepository;
-    private final UserEntityRepository userRepository;
+    private final UserRepository userRepository;
 
     private final ModelMapper modelMapper;
 
     @Autowired
-    public NewsServiceImpl(NewsRepository fashionNewsRepository, UserEntityRepository userRepository, ModelMapper modelMapper) {
+    public NewsServiceImpl(NewsRepository fashionNewsRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.fashionNewsRepository = fashionNewsRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
@@ -68,7 +69,7 @@ public NewsResponseDTO createNews(CreateNewsRequestDTO newsDTO) {
     if (authentication != null) {
         DefaultOAuth2User userDetails = (DefaultOAuth2User) authentication.getPrincipal();
 
-        UserEntity owner = userRepository.findByEmail(userDetails.getAttribute("email")).orElse(null);
+        User owner = userRepository.findByEmail(userDetails.getAttribute("email")).orElse(null);
 
         if (owner == null) {
             return null;

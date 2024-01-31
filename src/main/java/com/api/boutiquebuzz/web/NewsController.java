@@ -72,7 +72,7 @@ public class NewsController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'NewsArticle', 'DELETE')")
+//    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'NewsArticle', 'DELETE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteNews(@PathVariable Long id) {
         try {

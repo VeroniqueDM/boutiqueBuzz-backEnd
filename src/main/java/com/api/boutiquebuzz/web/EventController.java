@@ -75,7 +75,7 @@ public class EventController {
     }
 //    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(FashionEvent), 'DELETE')")
 //    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(com.api.boutiquebuzz.domain.entities.FashionEvent), 'DELETE', #id)")
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'FashionEvent', 'DELETE')")
+//    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'FashionEvent', 'DELETE')")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteEvent(@PathVariable Long id) {

@@ -24,6 +24,11 @@ server:
 #    show-sql: true
 
 spring:
+  data:
+    jpa:
+      repositories:
+        auditing:
+          enabled: true
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/boutiqueBuzz?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
@@ -35,6 +40,7 @@ spring:
       ddl-auto: update
     defer-datasource-initialization: true
     show-sql: true
+
   mvc:
     hiddenmethod:
       filter:
@@ -66,8 +72,24 @@ spring:
 #    org.hibernate.SQL: DEBUG
 #    org.hibernate.type.descriptor: DEBUG
 
+logging:
+  level:
+    root: DEBUG
 #logging:
 #  level:
-#    root: DEBUG
+#    com.api.boutiquebuzz.config.JwtAuthenticationFilter: DEBUG
+
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
+
 frontend:
   url: http://localhost:3000

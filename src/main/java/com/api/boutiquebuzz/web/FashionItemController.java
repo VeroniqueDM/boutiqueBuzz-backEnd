@@ -96,7 +96,7 @@ public class FashionItemController {
         }
     }
 //    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, T(com.api.boutiquebuzz.domain.entities.FashionItem), 'DELETE')")
-@PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'FashionItem', 'DELETE')")
+//@PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'FashionItem', 'DELETE')")
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFashionItem(@PathVariable Long id) {

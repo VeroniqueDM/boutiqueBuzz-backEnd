@@ -76,7 +76,7 @@ public class DesignerCollectionController {
 
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'DesignerCollection', 'DELETE')")
+//    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #id, 'DesignerCollection', 'DELETE')")
     public ResponseEntity<?> deleteDesignerCollection(@PathVariable Long id) {
         try {
             CollectionResponseDTO deletedDesignerCollection = designerCollectionService.deleteCollection(id);

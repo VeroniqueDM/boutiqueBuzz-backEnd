@@ -2,10 +2,12 @@ package com.api.boutiquebuzz.services;
 
 import com.api.boutiquebuzz.domain.entities.Category;
 import com.api.boutiquebuzz.domain.entities.DesignerCollection;
-import com.api.boutiquebuzz.domain.entities.UserEntity;
+
 import com.api.boutiquebuzz.repositories.CategoryRepository;
 import com.api.boutiquebuzz.repositories.CollectionRepository;
-import com.api.boutiquebuzz.repositories.UserEntityRepository;
+
+import com.api.boutiquebuzz.user.User;
+import com.api.boutiquebuzz.user.UserRepository;
 import com.api.boutiquebuzz.utils.ErrorConstants;
 import com.api.boutiquebuzz.domain.dtos.CreateFashionItemRequestDTO;
 import com.api.boutiquebuzz.domain.dtos.FashionItemResponseDTO;
@@ -31,10 +33,10 @@ public class FashionItemServiceImpl implements FashionItemService {
     private final CollectionRepository collectionRepository;
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
-    private final UserEntityRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public FashionItemServiceImpl(FashionItemRepository fashionItemRepository, CollectionRepository collectionRepository, CategoryRepository categoryRepository, ModelMapper modelMapper, UserEntityRepository userRepository) {
+    public FashionItemServiceImpl(FashionItemRepository fashionItemRepository, CollectionRepository collectionRepository, CategoryRepository categoryRepository, ModelMapper modelMapper, UserRepository userRepository) {
         this.fashionItemRepository = fashionItemRepository;
         this.collectionRepository = collectionRepository;
         this.categoryRepository = categoryRepository;
@@ -89,7 +91,7 @@ public FashionItemResponseDTO createFashionItem(CreateFashionItemRequestDTO fash
     if (authentication != null) {
         DefaultOAuth2User userDetails = (DefaultOAuth2User) authentication.getPrincipal();
 
-        UserEntity owner = userRepository.findByEmail(userDetails.getAttribute("email")).get();
+        User owner = userRepository.findByEmail(userDetails.getAttribute("email")).get();
 
         if (owner == null) {
             return null;
@@ -168,10 +170,10 @@ public FashionItemResponseDTO createFashionItem(CreateFashionItemRequestDTO fash
         FashionItemResponseDTO responseDTO = modelMapper.map(fashionItem, FashionItemResponseDTO.class);
 
         if (fashionItem.getOwner() != null) {
-            responseDTO.setDesignerName(fashionItem.getOwner().getName());
+            responseDTO.setDesignerName(fashionItem.getOwner().getFirstname()+ " " + fashionItem.getOwner().getLastname());
 //            responseDTO.setDesignerEmail(fashionItem.getOwner().getEmail());
 //            responseDTO.setDesignerPhone(fashionItem.getDesigner().getPhone());
-            responseDTO.setOwnerId(fashionItem.getOwner().getId());
+            responseDTO.setOwnerId(Long.valueOf(fashionItem.getOwner().getId()));
         }
 
         return responseDTO;
