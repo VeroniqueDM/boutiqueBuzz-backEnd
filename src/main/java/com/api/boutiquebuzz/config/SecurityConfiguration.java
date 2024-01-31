@@ -1,5 +1,6 @@
 package com.api.boutiquebuzz.config;
 
+
 import com.api.boutiquebuzz.auth.CustomUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

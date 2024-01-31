@@ -1,7 +1,9 @@
 package com.api.boutiquebuzz.auth;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
+
+import javax.persistence.*;
 
 
 @Table(name = "AUTH_AUTHORITY")
