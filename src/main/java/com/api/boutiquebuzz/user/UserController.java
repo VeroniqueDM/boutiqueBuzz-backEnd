@@ -29,9 +29,11 @@ public class UserController {
     }
 
     @GetMapping("/userinfo")
-    public ResponseEntity<?> getUserInfo(Principal user, HttpServletResponse response) {
+    public ResponseEntity<?> getUserInfo(Principal user
+//            , HttpServletResponse response
+    ) {
         System.out.println("SecConHolder (3): "+ SecurityContextHolder.getContext());
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+//        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         return ResponseEntity.ok(service.getUserInfo(user));
 //        if (user == null) {
 //            // Handle the case where the user is not authenticated

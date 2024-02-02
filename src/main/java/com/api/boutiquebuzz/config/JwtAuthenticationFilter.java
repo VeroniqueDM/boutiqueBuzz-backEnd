@@ -83,7 +83,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
                 System.out.println("SecurityContextHolder at the moment : " + SecurityContextHolder.getContext());
-                SecurityContextHolderStrategy currentMode = SecurityContextHolder.getContextHolderStrategy();
+//                SecurityContextHolderStrategy currentMode = SecurityContextHolder.getContextHolderStrategy();
 //                System.out.println("Strategy: " + currentMode);
 
 //                return;
