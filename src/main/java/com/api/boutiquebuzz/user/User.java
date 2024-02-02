@@ -24,7 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue
   private Integer id;
   private String firstname;
   private String lastname;
@@ -34,12 +34,12 @@ public class User implements UserDetails {
   @Enumerated(EnumType.STRING)
   private Role role;
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
   private List<Token> tokens;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return role.getAuthorities();
+    return this.role.getAuthorities();
   }
 
   @Override
@@ -74,7 +74,7 @@ public class User implements UserDetails {
 
   @Override
   public String toString() {
-    return "User{" +
+    return "User {" +
             "id=" + id +
             ", name='" + firstname + " " + lastname + '\'' +
             ", email='" + email + '\'' +

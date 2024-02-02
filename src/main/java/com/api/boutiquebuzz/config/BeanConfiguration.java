@@ -1,5 +1,6 @@
 package com.api.boutiquebuzz.config;
 
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -7,8 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 
 @Configuration
-//@ComponentScan(basePackages = "com.api.boutiquebuzz.utils")
-
+@RequiredArgsConstructor
 public class BeanConfiguration {
 //    private final JwtAuthenticationFilter jwtAuthFilter;
 

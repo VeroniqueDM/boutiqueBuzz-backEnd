@@ -15,8 +15,8 @@ import java.security.Principal;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private final UserDetailsService userDetailsService;
+//    @Autowired
+//    private final UserDetailsService userDetailsService;
     private final UserService service;
 
     @PatchMapping
@@ -32,14 +32,14 @@ public class UserController {
     public ResponseEntity<?> getUserInfo(Principal user, HttpServletResponse response) {
         System.out.println("SecConHolder (3): "+ SecurityContextHolder.getContext());
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-
-        if (user == null) {
-            // Handle the case where the user is not authenticated
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
-        }
-        User userObj = (User) userDetailsService.loadUserByUsername(user.getName());
-        User userObj2 = (User) service.loadUserByUsername(user.getName());
-        System.out.println("Success!");
+        return ResponseEntity.ok(service.getUserInfo(user));
+//        if (user == null) {
+//            // Handle the case where the user is not authenticated
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+//        }
+//        User userObj = (User) userDetailsService.loadUserByUsername(user.getName());
+//        User userObj = (User) service.loadUserByUsername(user.getName());
+//        System.out.println("Success!");
 //        UserInfo userInfo = new UserInfo();
 //        userInfo.setFirstName(userObj.getFirstname());
 //        userInfo.setLastName(userObj.getLastname());
@@ -47,9 +47,9 @@ public class UserController {
 
 
 //        return ResponseEntity.ok(user);
-        ResponseEntity<?> res = ResponseEntity.ok(userObj);
-        System.out.println("Response: " + res);
-        return ResponseEntity.ok(userObj);
+//        ResponseEntity<?> res = ResponseEntity.ok(userObj);
+//        System.out.println("Response: " + res);
+//        return ResponseEntity.ok(userObj);
 //        return ResponseEntity.ok(userObj2);
     }
 }

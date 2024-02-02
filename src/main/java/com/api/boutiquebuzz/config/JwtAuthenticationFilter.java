@@ -28,7 +28,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
 @RequiredArgsConstructor
-@Order(Ordered.HIGHEST_PRECEDENCE)
+//@Order(Ordered.HIGHEST_PRECEDENCE)
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
@@ -62,7 +62,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         System.out.println("Filter executing for " + request.getMethod() + " " + request.getServletPath());
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+//        var nameUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (userEmail != null && (SecurityContextHolder.getContext().getAuthentication() == null
+//                || nameUser.equals("anonymousUser")
+        )) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
             System.out.println("Filter executed for " + request.getMethod() + " " + request.getServletPath());
 
@@ -79,9 +82,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
-                System.out.println("SecConHolder (4): " + SecurityContextHolder.getContext());
+                System.out.println("SecurityContextHolder at the moment : " + SecurityContextHolder.getContext());
                 SecurityContextHolderStrategy currentMode = SecurityContextHolder.getContextHolderStrategy();
-                System.out.println("Strategy: " + currentMode);
+//                System.out.println("Strategy: " + currentMode);
 
 //                return;
 

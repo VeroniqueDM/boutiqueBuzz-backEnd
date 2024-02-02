@@ -22,13 +22,15 @@ server:
 #        dialect: org.hibernate.dialect.PostgreSQLDialect
 #        format_sql: true
 #    show-sql: true
+frontend:
+  url: http://localhost:3000
 
 spring:
-  data:
-    jpa:
-      repositories:
-        auditing:
-          enabled: true
+#  data:
+#    jpa:
+#      repositories:
+#        auditing:
+#          enabled: true
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/boutiqueBuzz?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
@@ -39,7 +41,9 @@ spring:
     hibernate:
       ddl-auto: update
     defer-datasource-initialization: true
-    show-sql: true
+#    show-sql: true
+    show-sql: false
+
 
   mvc:
     hiddenmethod:
@@ -72,24 +76,23 @@ spring:
 #    org.hibernate.SQL: DEBUG
 #    org.hibernate.type.descriptor: DEBUG
 
-logging:
-  level:
-    root: DEBUG
+#logging:
+#  level:
+#    root: DEBUG
 #logging:
 #  level:
 #    com.api.boutiquebuzz.config.JwtAuthenticationFilter: DEBUG
 
-#logging:
-#  level:
-#    org.springframework.security: DEBUG
+logging:
+  level:
+    org.springframework.security: DEBUG
+#    web: DEBUG
 
 application:
   security:
     jwt:
-      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      secret-key: fcd9b474e9d6ffe6389a0da1b89779f7bc4a10bdc8597e80e325ee8f6259bf16
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
 
-frontend:
-  url: http://localhost:3000

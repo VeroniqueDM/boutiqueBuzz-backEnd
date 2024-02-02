@@ -20,10 +20,11 @@ import java.security.Principal;
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
-    @Autowired
-    private final UserDetailsService userDetailsService;
+
+//    @Autowired
+//    private final UserDetailsService userDetailsService;
     private final AuthenticationService service;
-    private final UserService userService;
+//    private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
@@ -47,27 +48,27 @@ public class AuthenticationController {
         service.refreshToken(request, response);
     }
 
-    @GetMapping("/userinfo")
-    public ResponseEntity<?> getUserInfo(Principal user, HttpServletResponse response) {
-        String userR = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("SecConHolder (5): "+ SecurityContextHolder.getContext());
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-
-        if (user == null) {
-            // Handle the case where the user is not authenticated
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
-        }
-        User userObj = (User) userDetailsService.loadUserByUsername(user.getName());
-        User userObj2 = (User) userService.loadUserByUsername(user.getName());
-
-//        UserInfo userInfo = new UserInfo();
+//    @GetMapping("/userinfo")
+//    public ResponseEntity<?> getUserInfo(Principal user, HttpServletResponse response) {
+//        String userR = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        System.out.println("SecConHolder (5): "+ SecurityContextHolder.getContext());
+//        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+//
+//        if (user == null) {
+//            // Handle the case where the user is not authenticated
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+//        }
+////        User userObj = (User) userDetailsService.loadUserByUsername(user.getName());
+////        User userObj2 = (User) userService.loadUserByUsername(user.getName());
 //        userInfo.setFirstName(userObj.getFirstname());
-//        userInfo.setLastName(userObj.getLastname());
-//        userInfo.setRoles(userObj.getAuthorities().toArray());
-
-
-        return ResponseEntity.ok(user);
-//        return ResponseEntity.ok(userObj);
-//        return ResponseEntity.ok(userObj2);
-    }
+////        userInfo.setLastName(userObj.getLastname());
+////        userInfo.setRoles(userObj.getAuthorities().toArray());
+//
+//
+//        return ResponseEntity.ok(user);
+////        return ResponseEntity.ok(userObj);
+////        return ResponseEntity.ok(userObj2);
+//}
+////        UserInfo userInfo = new UserInfo();
+////
 }
